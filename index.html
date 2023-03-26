@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login with Weibo</title>
+</head>
+<body>
+    <h1>Login with Weibo...</h1>
+    <script>
+        // 从 URL 中解析出 access token 等信息，并将其传递给原生应用程序
+        function parseUrlParams() {
+            var url = window.location.href;
+            var params = url.split('?')[1];
+            if (!params) {
+                return;
+            }
+            var accessToken = params.split('&')[0].split('=')[1];
+            var expirationTime = params.split('&')[1].split('=')[1];
+            var userId = params.split('&')[2].split('=')[1];
+            var data = {
+                'accessToken': accessToken,
+                'expirationTime': expirationTime,
+                'userId': userId
+            };
+            // 使用 window.postMessage API 将数据发送给原生应用程序
+            window.postMessage(JSON.stringify(data));
+        }
+        parseUrlParams();
+    </script>
+</body>
+</html>
